@@ -1,6 +1,13 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+// ✅ Correct way to access env variable in Vite
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+
+if (!apiKey) {
+  throw new Error("VITE_GEMINI_API_KEY is not set in .env file");
+}
+
+const ai = new GoogleGenAI({ apiKey });
 
 export async function generateQuiz(topic: string) {
   const response = await ai.models.generateContent({
@@ -25,6 +32,7 @@ export async function generateQuiz(topic: string) {
       }
     }
   });
+
   return JSON.parse(response.text || "[]");
 }
 
@@ -46,6 +54,7 @@ export async function getStudyRecommendations(subject: string) {
       }
     }
   });
+
   return JSON.parse(response.text || "[]");
 }
 
@@ -54,17 +63,24 @@ export async function chatWithAssistant(message: string, context: string = "") {
     model: "gemini-3-flash-preview",
     contents: message,
     config: {
-      systemInstruction: `You are a helpful study assistant. Provide clear, concise answers. Avoid excessive markdown formatting like bolding unless it's essential for clarity. Context: ${context}`
+      systemInstruction: `You are a helpful study assistant. Provide clear, concise answers. Avoid excessive markdown formatting unless necessary. Context: ${context}`
     }
   });
+
   return response.text;
 }
 
-export async function generateStudyPlan(subjects: string, freeTime: string, duration: 'weekly' | 'monthly') {
+export async function generateStudyPlan(
+  subjects: string,
+  freeTime: string,
+  duration: "weekly" | "monthly"
+) {
   const response = await ai.models.generateContent({
     model: "gemini-3-flash-preview",
-    contents: `Generate a ${duration} study plan for the following subjects: ${subjects}. The student has the following free time: ${freeTime}. 
-    Format the response as a JSON array of timeline items. Each item should have 'day', 'time', 'subject', and 'activity'.`,
+    contents: `Generate a ${duration} study plan for the following subjects: ${subjects}. 
+    The student has the following free time: ${freeTime}. 
+    Format the response as a JSON array of timeline items. 
+    Each item should have 'day', 'time', 'subject', and 'activity'.`,
     config: {
       responseMimeType: "application/json",
       responseSchema: {
@@ -82,5 +98,6 @@ export async function generateStudyPlan(subjects: string, freeTime: string, dura
       }
     }
   });
+
   return JSON.parse(response.text || "[]");
 }
