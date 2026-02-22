@@ -1,0 +1,7 @@
+{
+  "name": "Student Smart Learning Platform",
+  "description": "A comprehensive full-stack platform for students to manage tasks, track performance with analytics, collaborate in teams, and leverage AI for smart learning and quiz generation.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
