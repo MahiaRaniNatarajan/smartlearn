@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div align="center">
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
@@ -18,3 +19,7 @@ View your app in AI Studio: https://ai.studio/apps/d8a6b002-3c1a-432c-9d46-ae9dc
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
+=======
+# smartlearn
+The Student Smart Learning Platform is a full-stack MERN application that helps students organize their studies, track performance, and collaborate through smart digital tools. It integrates task management, analytics dashboards, AI-powered learning support, and gamification features to make learning more interactive and efficient.
+>>>>>>> 9fd877d418c2f17b14b0fa5666fd6d1015411b6b
